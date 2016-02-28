@@ -1,4 +1,4 @@
-# HelloJessey
+# HelloJersey
 Demonstrate the basic usage with Jersey framework
 
 GET/SET/PUT/POST
