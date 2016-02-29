@@ -6,6 +6,7 @@ package net.xingws.sample.webservice.mapper;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 import net.xingws.sample.webservice.exception.XingwsSampleProviderNotExistException;
 
@@ -13,6 +14,7 @@ import net.xingws.sample.webservice.exception.XingwsSampleProviderNotExistExcept
  * @author benxing
  *
  */
+@Provider
 public class EntityNotExistExceptionMapper implements ExceptionMapper<XingwsSampleProviderNotExistException> {
 
 

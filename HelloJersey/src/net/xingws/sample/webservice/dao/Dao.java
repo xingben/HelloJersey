@@ -3,9 +3,8 @@
  */
 package net.xingws.sample.webservice.dao;
 
-import java.util.List;
-
 import net.xingws.sample.webservice.data.Provider;
+import net.xingws.sample.webservice.data.Providers;
 import net.xingws.sample.webservice.exception.XingwsSampleException;
 
 /**
@@ -40,5 +39,5 @@ public interface Dao {
 	/**
 	 * @return
 	 */
-	List<Provider> getProviders(long start, long size) throws XingwsSampleException;
+	Providers getProviders(long start, long size) throws XingwsSampleException;
 }

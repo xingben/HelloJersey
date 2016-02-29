@@ -3,10 +3,9 @@
  */
 package net.xingws.sample.webservice.service;
 
-import java.util.List;
-
 import net.xingws.sample.webservice.data.Contact;
 import net.xingws.sample.webservice.data.Provider;
+import net.xingws.sample.webservice.data.Providers;
 import net.xingws.sample.webservice.exception.XingwsSampleException;
 
 /**
@@ -39,5 +38,5 @@ public interface ProviderService {
 	 * @return
 	 * @throws XingwsSampleException
 	 */
-	List<Provider> getProviders(int start, int size) throws XingwsSampleException;
+	Providers getProviders(long start, long size) throws XingwsSampleException;
 }

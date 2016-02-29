@@ -3,7 +3,6 @@
  */
 package net.xingws.sample.webservice.service;
 
-import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -14,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import net.xingws.sample.webservice.dao.Dao;
 import net.xingws.sample.webservice.data.Contact;
 import net.xingws.sample.webservice.data.Provider;
+import net.xingws.sample.webservice.data.Providers;
 import net.xingws.sample.webservice.exception.XingwsSampleException;
 import net.xingws.sample.webservice.exception.XingwsSampleInternalException;
 import net.xingws.sample.webservice.exception.XingwsSampleProviderExistException;
@@ -88,8 +88,8 @@ public class ProviderServiceImp implements ProviderService {
 	}
 
 	@Override
-	public List<Provider> getProviders(int start, int size) throws XingwsSampleException {
-		List<Provider> providers = null;
+	public Providers getProviders(long start, long size) throws XingwsSampleException {
+		Providers providers = null;
 
 		try {
 			providers = this.dao.getProviders(start, size);

@@ -12,6 +12,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import net.xingws.sample.webservice.data.Provider;
+import net.xingws.sample.webservice.data.Providers;
 import net.xingws.sample.webservice.exception.XingwsSampleException;
 import net.xingws.sample.webservice.serializer.Serializer;
 import net.xingws.sample.webservice.util.RedisPool;
@@ -109,20 +110,27 @@ public class RedisDao implements Dao {
 	}
 
 	@Override
-	public List<Provider> getProviders(long start, long size) throws XingwsSampleException{
+	public Providers getProviders(long start, long size) throws XingwsSampleException{
 		Jedis jedis = this.redispool.getRedisPool().getResource();
+		Providers ret = null;
 		List<Provider> providers = new ArrayList<Provider>();
 		List<String> values = null;
+		long count = 0;
 		
 		try {
-			long count = jedis.zcard(providersKey);
+			count = jedis.zcard(providersKey);
 			if(start < 0) start = 0;
 			long end = start + size - 1;
 			if(end >= count) end = -1; 
 
 			Set<String> sets = jedis.zrange(providersKey, start, end);
 			String[] keys = sets.toArray(new String[sets.size()]);
-			values = jedis.mget(keys);
+			if(keys.length > 0) {
+				values = jedis.mget(keys);
+			}
+			ret = new Providers();
+			ret.setTotalProvider(count);
+			ret.setProviders(providers);
 		} finally {
 			this.close(jedis);
 		}
@@ -133,7 +141,7 @@ public class RedisDao implements Dao {
 			}
 		}
 		
-		return providers;
+		return ret;
 	}
 
 	private void close(Jedis jedis) {

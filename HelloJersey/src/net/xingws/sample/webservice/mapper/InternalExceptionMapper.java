@@ -6,6 +6,7 @@ package net.xingws.sample.webservice.mapper;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 import net.xingws.sample.webservice.exception.XingwsSampleInternalException;
 
@@ -13,6 +14,7 @@ import net.xingws.sample.webservice.exception.XingwsSampleInternalException;
  * @author benxing
  *
  */
+@Provider
 public class InternalExceptionMapper implements ExceptionMapper<XingwsSampleInternalException> {
 
 	@Override
