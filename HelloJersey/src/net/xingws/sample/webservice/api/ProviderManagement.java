@@ -28,6 +28,7 @@ import net.xingws.sample.webservice.data.Contact;
 import net.xingws.sample.webservice.data.Provider;
 import net.xingws.sample.webservice.data.Providers;
 import net.xingws.sample.webservice.exception.XingwsSampleException;
+import net.xingws.sample.webservice.interceptor.Compress;
 import net.xingws.sample.webservice.reponse.ProvidersResponse;
 import net.xingws.sample.webservice.service.ProviderService;
 /**
@@ -107,6 +108,7 @@ public class ProviderManagement {
 	@GET
 	@Path("/providers")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Compress
 	public Response getProviders(@Context UriInfo uriInfo, @DefaultValue("0") @QueryParam("start") long start,
 			@DefaultValue("5") @QueryParam("size") long size,
 			@DefaultValue("json") @QueryParam("format") String format)  throws XingwsSampleException {
