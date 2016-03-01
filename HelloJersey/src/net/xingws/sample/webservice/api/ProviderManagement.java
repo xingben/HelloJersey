@@ -46,7 +46,8 @@ public class ProviderManagement {
 	
 	@GET
 	@Path("/provider/{id}")
-	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})	
+	//@Produces(MediaType.APPLICATION_XML)		
 	public Response getProvider(@PathParam("id") String id,
 			@DefaultValue("json") @QueryParam("format") String format) throws XingwsSampleException {
 		MediaType type = MediaType.APPLICATION_JSON_TYPE;
@@ -62,7 +63,7 @@ public class ProviderManagement {
 		
 		Provider provider = service.getProvider(id);
 		
-		Response.ResponseBuilder builder = Response.ok(provider, type).cacheControl(cc);
+		Response.ResponseBuilder builder = Response.status(200).entity(provider).type(type).cacheControl(cc);
 		
 		return builder.build();
 	}
@@ -121,14 +122,15 @@ public class ProviderManagement {
 		Providers providers = service.getProviders(start, size);
 		
 		UriBuilder uribuilder = uriInfo.getBaseUriBuilder();
-		uribuilder.path("providers");
-		uribuilder.queryParam("start={start}", "size={size}");
+		uribuilder.path("ProviderManagement/providers");
+		uribuilder.queryParam("start","{start}");
+		uribuilder.queryParam("size","{size}");
 		
-		ProvidersResponse response = new ProvidersResponse();
-		response.setProviders(providers);
-		response.buildLinks(uribuilder, type, start, size);
+//		ProvidersResponse response = new ProvidersResponse();
+//		response.setProviders(providers);
+		providers.buildLinks(uribuilder, type, start, size);
 		
-		Response.ResponseBuilder builder = Response.ok(response, type);
+		Response.ResponseBuilder builder = Response.ok(providers, type);
 		
 		return builder.build();
 	}

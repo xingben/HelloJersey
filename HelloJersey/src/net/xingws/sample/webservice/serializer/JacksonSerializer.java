@@ -25,7 +25,7 @@ public class JacksonSerializer implements Serializer {
 	public <T> T deserialize(String payload, Class<T> t) throws XingwsSerializationException {
 		T ret = null;
 		
-		if(payload != null && payload.isEmpty()) {
+		if(payload != null && !payload.isEmpty()) {
 			try {
 				ret = mapper.readValue(payload, t);
 			} catch (IOException e) {

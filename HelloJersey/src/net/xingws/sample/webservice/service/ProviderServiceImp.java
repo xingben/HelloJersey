@@ -40,12 +40,12 @@ public class ProviderServiceImp implements ProviderService {
 		provider.setId(id);
 		provider.setContact(contact);
 
+		if (dao.contactExists(contact.getEmail())) {
+			logger.error(contact.getEmail() + " exists");
+			throw new XingwsSampleProviderExistException(contact.getEmail() + " exists");
+		}
+		
 		try {
-			if (dao.contactExists(contact.getEmail())) {
-				logger.error(contact.getEmail() + " exists");
-				throw new XingwsSampleProviderExistException(contact.getEmail() + " exists");
-			}
-
 			this.dao.updateProvider(provider);
 		} catch (Exception ex) {
 			logger.error("Service exception in Dao", ex);
@@ -58,12 +58,12 @@ public class ProviderServiceImp implements ProviderService {
 	@Override
 	public Provider updateProvider(Provider provider) throws XingwsSampleException {
 
+		if (!dao.providerExists(provider.getId())) {
+			logger.error(provider.getId() + " does not exist");
+			throw new XingwsSampleProviderNotExistException(provider.getId() + " does not exist");
+		}
+		
 		try {
-			if (!dao.providerExists(provider.getId())) {
-				logger.error(provider.getId() + " does not exist");
-				throw new XingwsSampleProviderNotExistException(provider.getId() + " does not exist");
-			}
-
 			this.dao.updateProvider(provider);
 		} catch (Exception ex) {
 			logger.error("Service exception in Dao", ex);
@@ -77,8 +77,13 @@ public class ProviderServiceImp implements ProviderService {
 	public Provider getProvider(String id) throws XingwsSampleException {
 		Provider provider = null;
 
+		if (!dao.providerExists(id)) {
+			logger.error(id + " does not exist");
+			throw new XingwsSampleProviderNotExistException(id + " does not exist");
+		}
+		
 		try {
-			this.dao.getProvider(id);
+			provider = this.dao.getProvider(id);
 		} catch (Exception ex) {
 			logger.error("Service exception in Dao", ex);
 			throw new XingwsSampleInternalException(ex);

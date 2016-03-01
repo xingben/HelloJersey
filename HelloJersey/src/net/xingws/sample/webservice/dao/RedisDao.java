@@ -98,7 +98,7 @@ public class RedisDao implements Dao {
 		Provider provider = null;
 		
 		try {
-			String email = jedis.hget(this.providersKey, id);
+			String email = jedis.hget(this.mapKey, id);
 			
 			if(email != null) {
 				provider = this.serializer.deserialize(jedis.get(email), Provider.class);

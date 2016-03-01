@@ -22,13 +22,7 @@ import net.xingws.sample.webservice.data.Providers;
  */
 @XmlRootElement
 public class ProvidersResponse {
-
-	@XmlElement
 	private Providers providers;
-	
-
-	@XmlElement(name = "link")
-	@XmlJavaTypeAdapter(LinkAdapter.class) 
 	private List<Link> links;
 	/**
 	 * 
@@ -46,6 +40,7 @@ public class ProvidersResponse {
 	/**
 	 * @param providers the providers to set
 	 */
+	@XmlElement
 	public final void setProviders(Providers providers) {
 		this.providers = providers;
 	}
@@ -58,6 +53,8 @@ public class ProvidersResponse {
 	/**
 	 * @param links the links to set
 	 */
+	@XmlElement(name = "link")
+	@XmlJavaTypeAdapter(LinkAdapter.class) 
 	public final void setLinks(List<Link> links) {
 		this.links = links;
 	}

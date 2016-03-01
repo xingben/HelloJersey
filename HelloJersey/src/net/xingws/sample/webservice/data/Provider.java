@@ -10,12 +10,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author benxing
  *
  */
-@XmlRootElement
+@XmlRootElement(name="provider")
 public class Provider {
-	@XmlElement
 	private String id;
-
-	@XmlElement	
 	private Contact contact;
 	
 	/**
@@ -28,6 +25,7 @@ public class Provider {
 	/**
 	 * @param id the id to set
 	 */
+	@XmlElement
 	public final void setId(String id) {
 		this.id = id;
 	}
@@ -42,6 +40,7 @@ public class Provider {
 	/**
 	 * @param contact the contact to set
 	 */
+	@XmlElement
 	public final void setContact(Contact contact) {
 		this.contact = contact;
 	}

@@ -12,19 +12,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Contact {
-	@XmlElement
 	private String email;
-	
-	@XmlElement
 	private String password;
-	
-	@XmlElement
 	private String firstName;
-	
-	@XmlElement
 	private String lastName;
-	
-	@XmlElement
 	private String phone;
 	
 	/**
@@ -37,6 +28,7 @@ public class Contact {
 	/**
 	 * @param email the email to set
 	 */
+	@XmlElement
 	public final void setEmail(String email) {
 		this.email = email;
 	}
@@ -51,6 +43,7 @@ public class Contact {
 	/**
 	 * @param password the password to set
 	 */
+	@XmlElement
 	public final void setPassword(String password) {
 		this.password = password;
 	}
@@ -65,6 +58,7 @@ public class Contact {
 	/**
 	 * @param firstName the firstName to set
 	 */
+	@XmlElement
 	public final void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -79,6 +73,7 @@ public class Contact {
 	/**
 	 * @param lastName the lastName to set
 	 */
+	@XmlElement
 	public final void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
@@ -93,6 +88,7 @@ public class Contact {
 	/**
 	 * @param phone the phone to set
 	 */
+	@XmlElement
 	public final void setPhone(String phone) {
 		this.phone = phone;
 	}
