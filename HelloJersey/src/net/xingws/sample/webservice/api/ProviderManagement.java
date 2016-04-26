@@ -24,11 +24,16 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import net.xingws.sample.webservice.data.Alert;
 import net.xingws.sample.webservice.data.Contact;
 import net.xingws.sample.webservice.data.Provider;
 import net.xingws.sample.webservice.data.Providers;
 import net.xingws.sample.webservice.exception.XingwsSampleException;
 import net.xingws.sample.webservice.interceptor.Compress;
+import net.xingws.sample.webservice.kafka.AlertingKafkaProducer;
+import net.xingws.sample.webservice.kafka.AlertingKafkaProducerPool;
 import net.xingws.sample.webservice.reponse.ProvidersResponse;
 import net.xingws.sample.webservice.service.ProviderService;
 /**
@@ -39,6 +44,8 @@ import net.xingws.sample.webservice.service.ProviderService;
 public class ProviderManagement {
 
 	private ProviderService service;
+	private AlertingKafkaProducerPool pool = AlertingKafkaProducerPool.getInstance();
+	ObjectMapper mapper = new ObjectMapper();
 	
 	@Inject
 	public ProviderManagement(ProviderService service) {
@@ -83,6 +90,26 @@ public class ProviderManagement {
 		Provider provider = service.createProvider(contact);
 		
 		Response.ResponseBuilder builder = Response.ok(provider, type);
+		
+		return builder.build();
+	}
+	
+	@POST
+	@Path("/create/alert")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response createAlert(Alert alert)  throws XingwsSampleException {
+		
+		try {
+			AlertingKafkaProducer producer = pool.getPool().borrowObject();
+			producer.send(alert.getName()+"_"+alert.getServer(), mapper.writeValueAsString(alert), "Alerting");
+			pool.getPool().returnObject(producer);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new XingwsSampleException(e);
+		}
+		
+		Response.ResponseBuilder builder = Response.ok();
 		
 		return builder.build();
 	}
